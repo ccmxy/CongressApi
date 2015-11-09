@@ -137,7 +137,8 @@ public class MainActivity extends AppCompatActivity {
             String party = explrObject.getString("party");
             String gender = explrObject.getString("gender");
             String birthday = explrObject.getString("birthday");
-            CongressDetails congressPerson = new CongressDetails(firstName, lastName, party, gender, birthday);
+            String phone = explrObject.getString("phone");
+            CongressDetails congressPerson = new CongressDetails(firstName, lastName, gender, party, birthday, phone);
             congressPeople.add(congressPerson);
         }
 
@@ -168,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
             congressString = " ";
             congressString += "Party: ";
             congressString += congressPerson.getParty();
+            congressStringList.add(congressString);
+            congressString = "Phone: " + (congressPerson.getPhone());
             congressStringList.add(congressString);
             congressString = " ";
             congressStringList.add(congressString);

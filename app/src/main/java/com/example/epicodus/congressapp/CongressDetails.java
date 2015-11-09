@@ -9,18 +9,20 @@ public class CongressDetails {
     private  String mGender;
     private  String mParty;
     private  String mAge;
+    private String mPhone;
 
     public String getLastName() {
         return mLastName;
     }
 
-    public CongressDetails(String firstName, String lastName, String gender, String party, String age)
+    public CongressDetails(String firstName, String lastName, String gender, String party, String age, String phone)
     {
         mLastName = lastName;
         mFirstName = firstName;
         mGender = gender;
         mParty = party;
         mAge = age;
+        mPhone = phone;
     }
     public void setLastName(String lastName) {
         mLastName = lastName;
@@ -59,5 +61,7 @@ public class CongressDetails {
     }
 
 
-
+    public String getPhone() {
+        return mPhone;
+    }
 }
