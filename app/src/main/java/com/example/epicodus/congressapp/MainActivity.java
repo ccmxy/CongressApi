@@ -8,7 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -188,13 +190,31 @@ public class MainActivity extends AppCompatActivity {
         mUserInput.setVisibility(View.INVISIBLE);
         mSubmitButton.setVisibility(View.INVISIBLE);
 
+
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                String theLine = (String) arg0.getItemAtPosition(position);
+                if (theLine.startsWith("Phone: ")) {
+                    String phoneNumber = (String) arg0.getItemAtPosition(position);
+                    phoneNumber.split(" ");
+                    phoneNumber.replace("-", "");
+                    Uri number = Uri.parse("tel:" + phoneNumber);
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+                    startActivity(callIntent);
+                }
+
+            }
+        });
+
+        /*
         CongressDetails congressPerson = mCongressDetails.get(0);
         String phoneNumber = congressPerson.getFormattedPhone();
-        //202-224-5244
        Uri number = Uri.parse("tel:" + congressPerson.getFormattedPhone());
-
         Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
        startActivity(callIntent);
+       */
 
     }
 
