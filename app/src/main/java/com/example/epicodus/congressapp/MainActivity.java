@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,16 +33,21 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText mUserInput;
-    private Button mSubmitButton;
     private String mZipCode;
     public static final String Tag = MainActivity.class.getSimpleName();
     private ArrayList<CongressDetails> mCongressDetails;
     private TextView mThatCongress;
     private String mSingleCongressPerson;
     List<String> congressPerson;
-    @Bind(R.id.firstNameLabel)
-    TextView mFirstNameLabel;
+
+    @Bind(R.id.listView)
+    ListView lv;
+
+    @Bind(R.id.submitButton)
+    Button mSubmitButton;
+
+    @Bind(R.id.userInput)
+    EditText mUserInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mUserInput = (EditText) findViewById(R.id.userInput);
-        mSubmitButton = (Button) findViewById(R.id.submitButton);
         congressPerson = new ArrayList<String>();
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
@@ -59,14 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 getCongressInfo(mZipCode);
             }
         });
-   //     CongressDetails congressPerson = new CongressDetails("Sarah", "Marshal", "R", "F", "August");
-
-     //   mCongressDetails.add(congressPerson);
-
-
-      //   CongressDetails singleCongressPerson = mCongressDetails.get(0);
-//        String firstName = singleCongressPerson.getFirstName();
-//        mThatCongress.setText(firstName);
 
     }
     public void getCongressInfo(String zipcode) {
@@ -159,8 +156,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateDisplay(){
         CongressDetails congressDude = mCongressDetails.get(0);
-        mFirstNameLabel.setText(congressDude.getFirstName());
+
+
+        List<String> congressStringList = new ArrayList<String>();
+        for(int i = 0; i < mCongressDetails.size(); i++){
+            CongressDetails congressPerson = mCongressDetails.get(i);
+            String congressString = congressPerson.getFirstName();
+            congressString += " ";
+            congressString += congressPerson.getLastName();
+            congressStringList.add(congressString);
+            congressString = " ";
+            congressString += "Party: ";
+            congressString += congressPerson.getParty();
+            congressStringList.add(congressString);
+            congressString = " ";
+            congressStringList.add(congressString);
+        }
+
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                congressStringList);
+        lv.setAdapter(arrayAdapter);
+
+        mUserInput.setVisibility(View.INVISIBLE);
+        mSubmitButton.setVisibility(View.INVISIBLE);
+
     }
 
-
 }
+
+
