@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Address;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<CongressDetails> mCongressDetails;
     private TextView mThatCongress;
     private String mSingleCongressPerson;
+    static final int PICK_CONTACT_REQUEST = 1;
+
     List<String> congressPerson;
 
     @Bind(R.id.listView)
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.userInput)
     EditText mUserInput;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
             congressStringList.add(congressString);
         }
 
+        congressStringList.add("Sure, that's interesting... but who are my friends' representatives?");
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this,
@@ -216,18 +222,19 @@ public class MainActivity extends AppCompatActivity {
                     Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
                     startActivity(webIntent);
                 }
+                if (theLine.equals("Sure, that's interesting... but who are my friends' representatives?")) {
+                    Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
+                    pickContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE); // Show user only contacts w/ phone numbers
+                    startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
+                }
 
 
-            }
-        });
+        }
+    }
 
-        /*
-        CongressDetails congressPerson = mCongressDetails.get(0);
-        String phoneNumber = congressPerson.getFormattedPhone();
-       Uri number = Uri.parse("tel:" + congressPerson.getFormattedPhone());
-        Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
-       startActivity(callIntent);
-       */
+            );
+
+
 
     }
 
