@@ -142,7 +142,8 @@ public class MainActivity extends AppCompatActivity {
             String gender = explrObject.getString("gender");
             String birthday = explrObject.getString("birthday");
             String phone = explrObject.getString("phone");
-            CongressDetails congressPerson = new CongressDetails(firstName, lastName, gender, party, birthday, phone);
+            String website = explrObject.getString("website");
+            CongressDetails congressPerson = new CongressDetails(firstName, lastName, gender, party, birthday, phone, website);
             congressPeople.add(congressPerson);
         }
 
@@ -176,6 +177,8 @@ public class MainActivity extends AppCompatActivity {
             congressStringList.add(congressString);
             congressString = "Phone: " + (congressPerson.getPhone());
             congressStringList.add(congressString);
+            congressString = congressPerson.getWebsite();
+            congressStringList.add("Website: " + congressString);
             congressString = " ";
             congressStringList.add(congressString);
         }
@@ -205,6 +208,15 @@ public class MainActivity extends AppCompatActivity {
                     Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
                     startActivity(callIntent);
                 }
+                if (theLine.startsWith("Website: ")) {
+                    String url = (String) arg0.getItemAtPosition(position);
+                    String[] urlArray = url.split(" ");
+                    url = urlArray[1];
+                    Uri webpage = Uri.parse(url);
+                    Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                    startActivity(webIntent);
+                }
+
 
             }
         });

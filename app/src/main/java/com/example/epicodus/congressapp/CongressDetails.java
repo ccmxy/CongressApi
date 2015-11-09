@@ -10,12 +10,13 @@ public class CongressDetails {
     private  String mParty;
     private  String mAge;
     private String mPhone;
+    private String mWebsite;
 
     public String getLastName() {
         return mLastName;
     }
 
-    public CongressDetails(String firstName, String lastName, String gender, String party, String age, String phone)
+    public CongressDetails(String firstName, String lastName, String gender, String party, String age, String phone, String website)
     {
         mLastName = lastName;
         mFirstName = firstName;
@@ -23,6 +24,7 @@ public class CongressDetails {
         mParty = party;
         mAge = age;
         mPhone = phone;
+        mWebsite = website;
     }
     public void setLastName(String lastName) {
         mLastName = lastName;
@@ -64,7 +66,9 @@ public class CongressDetails {
     public String getPhone() {
         return mPhone;
     }
-
+    public String getWebsite() {
+        return mWebsite;
+    }
     public String getFormattedPhone() {
 
         return mPhone.replace("-", "");
