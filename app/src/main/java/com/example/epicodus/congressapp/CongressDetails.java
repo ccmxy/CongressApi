@@ -64,4 +64,9 @@ public class CongressDetails {
     public String getPhone() {
         return mPhone;
     }
+
+    public String getFormattedPhone() {
+
+        return mPhone.replace("-", "");
+    }
 }

@@ -1,8 +1,10 @@
 package com.example.epicodus.congressapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -185,6 +187,14 @@ public class MainActivity extends AppCompatActivity {
 
         mUserInput.setVisibility(View.INVISIBLE);
         mSubmitButton.setVisibility(View.INVISIBLE);
+
+        CongressDetails congressPerson = mCongressDetails.get(0);
+        String phoneNumber = congressPerson.getFormattedPhone();
+        //202-224-5244
+       Uri number = Uri.parse("tel:" + congressPerson.getFormattedPhone());
+
+        Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+       startActivity(callIntent);
 
     }
 
