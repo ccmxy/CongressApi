@@ -198,7 +198,8 @@ public class MainActivity extends AppCompatActivity {
                 String theLine = (String) arg0.getItemAtPosition(position);
                 if (theLine.startsWith("Phone: ")) {
                     String phoneNumber = (String) arg0.getItemAtPosition(position);
-                    phoneNumber.split(" ");
+                    String[] phoneArray = phoneNumber.split(" ");
+                    phoneNumber = phoneArray[1];
                     phoneNumber.replace("-", "");
                     Uri number = Uri.parse("tel:" + phoneNumber);
                     Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
