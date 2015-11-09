@@ -26,11 +26,12 @@
         android:layout_centerHorizontal="true"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show it "
-        android:id="@+id/theCongress"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="First Name"
+        android:id="@+id/firstNameLabel"
         android:layout_below="@+id/submitButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp"/>
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

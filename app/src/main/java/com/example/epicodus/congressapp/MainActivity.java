@@ -3,11 +3,9 @@ package com.example.epicodus.congressapp;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +26,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText mUserInput;
@@ -38,15 +39,17 @@ public class MainActivity extends AppCompatActivity {
     private TextView mThatCongress;
     private String mSingleCongressPerson;
     List<String> congressPerson;
-
+    @Bind(R.id.firstNameLabel)
+    TextView mFirstNameLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
         mUserInput = (EditText) findViewById(R.id.userInput);
         mSubmitButton = (Button) findViewById(R.id.submitButton);
-        mThatCongress = (TextView) findViewById(R.id.theCongress);
         congressPerson = new ArrayList<String>();
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +59,12 @@ public class MainActivity extends AppCompatActivity {
                 getCongressInfo(mZipCode);
             }
         });
-//        CongressDetails singleCongressPerson = mCongressDetails.get(0);
+   //     CongressDetails congressPerson = new CongressDetails("Sarah", "Marshal", "R", "F", "August");
+
+     //   mCongressDetails.add(congressPerson);
+
+
+      //   CongressDetails singleCongressPerson = mCongressDetails.get(0);
 //        String firstName = singleCongressPerson.getFirstName();
 //        mThatCongress.setText(firstName);
 
@@ -84,13 +92,21 @@ public class MainActivity extends AppCompatActivity {
 
                     if (response.isSuccessful()) {
                         mCongressDetails = getCurrentDetails(jsonData);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateDisplay();
+
+                            }
+                        });
+
 
                     } else {
                         alertUserAboutError();
                     }
                 } catch (IOException e) {
                     Log.e(Tag, "Exception caught: ", e);
-                }_app.git
+                }
                 catch ( JSONException e) {
                     Log.e(Tag, "Exception caught: ", e);
 
@@ -104,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Toast.makeText(this, "Network is not available", Toast.LENGTH_LONG).show();
     }
-    Log.d(Tag, "MAin UI code is running!");
+    Log.d(Tag, "Main UI code is running!");
 }
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
@@ -128,11 +144,6 @@ public class MainActivity extends AppCompatActivity {
             congressPeople.add(congressPerson);
         }
 
-
-
-
-
-
         return congressPeople;
     }
 
@@ -144,6 +155,11 @@ public class MainActivity extends AppCompatActivity {
             isAvailable = true;
         }
         return isAvailable;
+    }
+
+    private void updateDisplay(){
+        CongressDetails congressDude = mCongressDetails.get(0);
+        mFirstNameLabel.setText(congressDude.getFirstName());
     }
 
 
